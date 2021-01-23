@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memory_plugin/memory_plugin.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,7 +11,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-       
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
@@ -29,17 +29,26 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  String? version = 'version need to get';
+  @override
+  void initState() {
+    super.initState();
+    getVersion();
+  }
+
+  getVersion() async {
+    version = await MemoryPlugin.platformVersion;
+    setState(() {});
+  }
 
   void _incrementCounter() {
     setState(() {
-      
       _counter++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title!),
@@ -48,6 +57,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(
+              'version: $version',
+            ),
+            SizedBox(
+              height: 20,
+            ),
             Text(
               'You have pushed the button this many times:',
             ),
